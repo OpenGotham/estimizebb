@@ -78,6 +78,8 @@ GEM
     ffi (1.0.8)
     gherkin (2.3.8)
       json (>= 1.4.6)
+    httparty (0.7.7)
+      crack (= 0.1.8)
     i18n (0.5.0)
     json (1.5.1)
     json_pure (1.5.1)
@@ -97,6 +99,10 @@ GEM
     mime-types (1.16)
     mini_magick (3.2.1)
       subexec (~> 0.0.4)
+    mlb (0.2.6)
+      httparty (~> 0.6)
+      json (~> 1.4)
+      sqlite3-ruby (~> 1.3)
     multi_json (1.0.2)
     multi_xml (0.2.2)
     multipart-post (1.1.1)
@@ -218,6 +224,7 @@ DEPENDENCIES
   fabrication
   meta_search
   mini_magick
+  mlb
   oa-oauth
   pg
   pickler

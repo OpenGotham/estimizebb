@@ -12,6 +12,7 @@ gem 'resque'
 gem 'simple_form'
 gem 'mini_magick'
 gem 'meta_search'
+gem 'mlb'
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
