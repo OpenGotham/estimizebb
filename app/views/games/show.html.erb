@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Starts at:</b>
+  <%= @game.starts_at %>
+</p>
+
+<p>
+  <b>Home team:</b>
+  <%= @game.home_team_id %>
+</p>
+
+<p>
+  <b>Away team:</b>
+  <%= @game.away_team_id %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%= @game.venue_id %>
+</p>
+
+<p>
+  <b>Mlb gameid:</b>
+  <%= @game.mlb_gameid %>
+</p>
+
+<p>
+  <b>Inning state:</b>
+  <%= @game.inning_state %>
+</p>
+
+<p>
+  <b>League:</b>
+  <%= @game.league %>
+</p>
+
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>

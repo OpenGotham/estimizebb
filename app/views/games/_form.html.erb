@@ -1,0 +1,17 @@
+<%= simple_form_for(@game) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :starts_at %>
+    <%= f.input :home_team_id %>
+    <%= f.input :away_team_id %>
+    <%= f.input :venue_id %>
+    <%= f.input :mlb_gameid %>
+    <%= f.input :inning_state %>
+    <%= f.input :league %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

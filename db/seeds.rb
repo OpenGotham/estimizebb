@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+MLB::Team.all.each do|mlbteam|
+  Team.create(:name => mlbteam.name, :league => mlbteam.league, :division => mlbteam.league, :manager => mlbteam.manager, :wins => mlbteam.wins, :losses => mlbteam.losses, :founded => mlbteam.founded, :mascot => mlbteam.mascot, :ballpark => mlbteam.ballpark, :logo_url => mlbteam.logo_url)
+end
+
+
