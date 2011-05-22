@@ -1,40 +1,73 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Starts at:</b>
-  <%= @game.starts_at %>
-</p>
+<h2>
+  <%= @game.home_team.name %> Hosting the <%= @game.away_team.name %> at <%= @game.venue %>
+</h2>
 
-<p>
-  <b>Home team:</b>
-  <%= @game.home_team_id %>
-</p>
-
-<p>
-  <b>Away team:</b>
-  <%= @game.away_team_id %>
-</p>
-
-<p>
-  <b>Venue:</b>
-  <%= @game.venue_id %>
-</p>
-
-<p>
-  <b>Mlb gameid:</b>
-  <%= @game.mlb_gameid %>
-</p>
-
-<p>
-  <b>Inning state:</b>
-  <%= @game.inning_state %>
-</p>
-
-<p>
-  <b>League:</b>
-  <%= @game.league %>
-</p>
+<h3>
+  <%= @game.starts_at.to_s(:short_time) %>
+</h3>
 
 
-<%= link_to 'Edit', edit_game_path(@game) %> |
-<%= link_to 'Back', games_path %>
+<h4>Home Team Players (<%= @game.home_team.name %>)</h4>
+<table class="data" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Number</th>
+			<th>Position</th>
+			<th>RL</th>
+			<th>AVG</th>
+			<th>HR</th>
+			<th>RBI</th>
+			<th>ERA</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<% @game.home_team_player_stats.each do |player_stats| %>
+	<tr>
+		<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
+		<td><%= player_stats.player.number %></td>
+		<td><%= player_stats.position %></td>
+		<td><%= player_stats.rl %></td>
+		<td class="right"><%= player_stats.avg %></td>
+		<td class="right"><%= player_stats.hr %></td>
+		<td class="right"><%= player_stats.rbi %></td>
+		<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>
+
+
+<h4>Away Team Players (<%= @game.away_team.name %>)</h4>
+<table class="data" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Number</th>
+			<th>Position</th>
+			<th>RL</th>
+			<th>AVG</th>
+			<th>HR</th>
+			<th>RBI</th>
+			<th>ERA</th>
+		</tr>
+	</thead>
+	<tbody>
+
+	<% @game.away_team_player_stats.each do |player_stats| %>
+	<tr>
+		<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
+		<td><%= player_stats.player.number %></td>
+		<td><%= player_stats.position %></td>
+		<td><%= player_stats.rl %></td>
+		<td class="right"><%= player_stats.avg %></td>
+		<td class="right"><%= player_stats.hr %></td>
+		<td class="right"><%= player_stats.rbi %></td>
+		<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>

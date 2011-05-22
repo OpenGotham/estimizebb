@@ -6,4 +6,14 @@ class Game < ActiveRecord::Base
   #scope :current_upcoming, where(:in_progress => true)
   #scope :pending, :conditions => ["starts_at >= ?", DateTime.now]
   #scope :upcoming, :conditions => ["starts_at <= ?", DateTime.now + 2.day]
+  
+  
+  def home_team_player_stats
+    TeamPlayerStats.where("team_id = ? AND game_id = ?",home_team.id, self.id)
+  end
+  
+  def away_team_player_stats
+    TeamPlayerStats.where("team_id = ? AND game_id = ?",away_team.id, self.id)
+  end
+  
 end
