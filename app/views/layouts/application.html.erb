@@ -10,11 +10,75 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-  <div id='container'>
-    <%= yield %>
-  </div>
-
+	
+	<div id="page_container" class="container_12 clearfix">
+		<section id="masthead" class="grid_12">
+			
+			<% unless user_signed_in? %> 
+				<%= link_to("Sign up now!",new_user_registration_url)%>
+				<div id="sign_in_toggle"><span>Have an Account?</span>Sign In</div>
+				<div id="inline_login_container">
+					<%= form_for("user", :url => user_session_path, :html => {:id => "inline_login"}) do |f| %> 
+					<div class="field">
+						<%= f.label :email %>
+						<%= f.text_field :email , :size=>'15',:maxlength=>'32' %>
+					</div>
+					<div class="field">
+						<%= f.label :password %>
+						<%= f.password_field :password , :size=>'15', :maxlength=>'32' %>
+					</div>
+					<div class="field">
+						<label>&nbsp;</label>
+						<%= f.submit "Sign in", :class => "green button" %>
+					</div>
+					<div id="forgot_pass">
+						<%= link_to "Forgot your password?", new_password_path('user')  %> 
+					</div>
+					<% end %>
+				</div>
+			<% else %>
+				<div id="logged_in_status">Welcome back, <%= current_user.first_name %> <%= link_to("Logout", destroy_user_session_url)%></div>
+			<% end %>
+			
+		</section>
+		
+		<header class="grid_12">
+			<h1>Predict-a-Ball</h1>
+			
+			<ul id="menu">
+				<li>Home</li>
+				<li>Teams</li>
+				<li>Upcoming Games</li>
+			</ul>
+		</header>
+		
+		<div class="grid_8">
+			
+			<% flash.each do |name, msg| %>
+				<%= content_tag :div, msg, :id => "flash_#{name}", :class => "flash #{name}" if msg.is_a?(String) %>
+			<% end %>
+			
+			 LEFT <%= yield %>
+		</div>
+		
+		<div class="grid_4">
+			RIGHT <%= yield(:right_content) %>
+		</div>
+		
+		<footer class="grid_12">
+	    	All contents copyright &copy;<%= Time.now.year.to_s%> Hack-a-doodle-doo. All rights reserved (Except those that the MLB might sue us for)
+	    </footer>
+		
+	</div>
+	
 </body>
+
+<script>
+	$("#sign_in_toggle").click(function(){
+		$("#inline_login_container").slideToggle('fast');
+	});
+</script>
+
 </html>
 
 

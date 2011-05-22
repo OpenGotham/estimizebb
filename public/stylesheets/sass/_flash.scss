@@ -1,0 +1,21 @@
+.flash {
+	text-align: center;
+	padding:    .3em .4em;
+	margin:     0 auto .5em;
+	clear:      both;
+}
+
+.flash.error {
+	border: thin solid #8b0000;
+	background: #ffc0cb;
+}
+
+.flash.notice, .flash.info {
+	border: thin solid #009033;
+	background: #DFFFE7;
+}
+
+.flash.warning {
+	border: thin solid #b8860b;
+	background: #ff0;
+}

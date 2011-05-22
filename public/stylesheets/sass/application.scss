@@ -1,0 +1,172 @@
+/*@import url('/stylesheets/refinery/application.css');*/
+
+@import "reset";
+@import "960";
+@import "text";
+@import "typography";
+@import "social_links";
+@import "buttons";
+@import "flash";
+@import "dev";
+
+$accent_color_1:		#ff0033;
+$accent_color_1_hover:	#981a37;
+$link_color:	#981a37;
+$border_color:	#666666;
+$standard_gray:	#666666;
+$light_gray:	#cccccc;
+$pale_gray:		#f1f1f1;
+
+$white:			#ffffff;
+$black:			#000000;
+
+$title_font:	'PFDinTextCompPro', Arial, sans-serif;
+$body_font: 	'Georgia,serif,Times';
+
+.fl{
+	float:left;
+}
+
+.fr{
+	float:right;
+}
+
+.clr{
+	clear:both;
+}
+
+a{
+	color:$link_color;
+}
+
+.black{
+	color:$black;
+}
+
+header{
+	padding-top:10px;
+}
+
+footer{
+	padding:5px 0px;
+}
+
+
+#menu{
+	text-transform:uppercase;
+	font-family: $title_font;
+	font-size:20px;
+	list-style:none;
+	li{
+		float:left;
+		margin:0px 5px 0px 0px;
+		&:after{
+			content:  " /";
+		}
+		&:last-child:after {
+			content: ""; 
+		}
+		&.selected a, & a:hover{
+			font-weight:normal;
+			color:$accent_color_1;
+		}
+	}
+	a{
+		text-decoration:none;
+		color:$black;
+	}
+
+}
+
+#social_link_area{
+	margin-top:-4px;
+	.address{
+		float:right;
+		margin-right:0.5em;
+	}
+}
+
+
+section.content{
+	border-top:1px solid $black;
+	padding-top:10px;
+	margin-bottom:15px;
+}
+
+article{
+	border-top:1px solid $light_gray;
+	padding-top:5px;
+	margin-bottom:5px;
+	p{
+		color:$standard_gray;
+		font-size:12px;
+	}
+}
+
+
+.flow_cloumn_2{
+	-moz-column-count: 2; -moz-column-gap: 1em; 
+	-webkit-column-count: 2; -webkit-column-gap: 1em;
+	column-count: 2; column-gap: 1em;
+}
+
+.flow_cloumn_3{
+	-moz-column-count: 3; -moz-column-gap: 1em; 
+	-webkit-column-count: 3; -webkit-column-gap: 1em;
+	column-count: 3; column-gap: 1em;
+}
+
+section#masthead{
+	position:relative;
+	height:30px;
+	line-height:30px;
+	border-bottom:1px solid $border_color;
+}
+
+#sign_in_toggle, #logged_in_status{
+	position:absolute;
+	width:225px;
+	height:30px;
+	right:0px;
+	top:0px;
+	text-align:center;
+	border-left:1px solid $border_color;
+	border-right:1px solid $border_color;
+	span{
+		display:inline-block;
+		margin-right:10px;
+		font-size:11px;
+	}
+	
+}
+
+#inline_login_container{
+	display:none;
+	position:absolute;
+	right:0px;
+	top:30px;
+	width:225px;
+	border:1px solid $border_color;
+}
+
+
+
+form#inline_login{
+	div.field{
+		position:relative;
+		margin:5px;
+		label{
+			display:inline-block;
+			width:75px;
+		}
+		input{
+			width:125px;
+			&#user_submit{
+				margin:5px;
+			}
+		}
+	}
+	div#forgot_pass{
+		text-align:center;
+	}
+}
