@@ -4,7 +4,7 @@ class CreateGames < ActiveRecord::Migration
       t.datetime :starts_at
       t.integer :home_team_id
       t.integer :away_team_id
-      t.integer :venue_id
+      t.string :venue
       t.string :mlb_gameid
       t.integer :inning_state
       t.string :league
