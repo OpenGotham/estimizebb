@@ -1,0 +1,18 @@
+<%= simple_form_for(@player_game_stat_estimate) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :player_id %>
+    <%= f.input :game_id %>
+    <%= f.input :team_id %>
+    <%= f.input :avg %>
+    <%= f.input :hr %>
+    <%= f.input :rbi %>
+    <%= f.input :era %>
+    <%= f.input :user_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
