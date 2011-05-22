@@ -11,3 +11,5 @@ vendor/rails
 **.swn
 **.*~
 
+
+/public/uploads/user/avatar/1/
