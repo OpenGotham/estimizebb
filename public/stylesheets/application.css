@@ -1351,20 +1351,27 @@ a {
   color: black; }
 
 header {
-  padding-top: 15px; }
+  padding-top: 5px; }
   header h1 {
-    margin-left: 5px; }
+    text-indent: -99999px;
+    margin: 0px 0px 5px 5px; }
+    header h1.logo {
+      width: 400px;
+      height: 60px;
+      background: url("/images/logo_sm.png") no-repeat; }
 
 footer {
   padding: 5px 0px; }
 
 #menu {
+  background: #a4c2e6;
   border-top: 1px solid #666666;
   border-bottom: 1px solid #666666;
   text-transform: uppercase;
   font-family: "PFDinTextCompPro", Arial, sans-serif;
   font-size: 20px;
-  list-style: none; }
+  list-style: none;
+  padding-left: 5px; }
   #menu li {
     float: left;
     margin: 0px 5px 0px 0px; }
@@ -1374,12 +1381,12 @@ footer {
       content: ""; }
     #menu li.selected a, #menu li a:hover {
       font-weight: normal;
-      color: #ff0033; }
+      color: #44556e; }
   #menu a {
     text-decoration: none;
     color: black; }
     #menu a.selected {
-      color: #ff0033; }
+      color: #44556e; }
 
 #social_link_area {
   margin-top: -4px; }
@@ -1390,6 +1397,12 @@ footer {
 section.content {
   padding-top: 10px;
   margin-bottom: 15px; }
+  section.content.sidebar {
+    margin-bottom: 10px; }
+    section.content.sidebar > section {
+      background: #f1f1f1;
+      padding: 5px 10px;
+      margin-bottom: 10px; }
 
 article {
   border-top: 1px solid #cccccc;
@@ -1416,10 +1429,15 @@ article {
   column-gap: 1em; }
 
 section#masthead {
+  background: #44556e;
+  color: #a4c2e6;
   position: relative;
   height: 30px;
   line-height: 30px;
-  border-bottom: 1px solid #666666; }
+  border-bottom: 1px solid #666666;
+  padding-left: 10px; }
+  section#masthead a {
+    color: white; }
 
 #sign_in_toggle, #logged_in_status {
   float: right;

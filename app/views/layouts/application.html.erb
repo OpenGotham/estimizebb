@@ -20,7 +20,7 @@
 		</section>
 		
 		<header class="grid_12">
-			<h1>Predict-a-Ball</h1>
+			<h1 class="logo">Predict-a-Ball</h1>
 			<ul id="menu" class="clearfix">
 				<li><%= link_to("Home",root_url, :class => ("selected" if current_page?(root_url))) %></li>
 				<li><%= link_to("Teams",teams_url, :class => ("selected" if current_page?(teams_url))) %></li>
@@ -33,7 +33,7 @@
 			<%= yield %>
 		</section>
 		
-		<section class="grid_4 content">
+		<section class="grid_4 content sidebar">
 			<%= yield(:right_content) %>
 			
 			<%= render :partial => "/shared/leaderboard", :locals => {:leaders => User.scoped.limit(10)} %>

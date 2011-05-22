@@ -13,6 +13,7 @@ gem 'simple_form'
 gem 'mini_magick'
 gem 'meta_search'
 gem 'mlb'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'

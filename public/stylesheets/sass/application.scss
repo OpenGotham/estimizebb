@@ -12,7 +12,9 @@
 @import "tabs";
 /*@import "dev";*/
 
-$accent_color_1:		#ff0033;
+$accent_color_1:		rgb(68,85,110);
+$accent_color_3:		rgb(103,128,166);
+$accent_color_3:		rgb(164,194,230);
 $accent_color_1_hover:	#981a37;
 $link_color:	#981a37;
 $border_color:	#666666;
@@ -47,9 +49,15 @@ a{
 }
 
 header{
-	padding-top:15px;
+	padding-top:5px;
 	h1{
-		 margin-left:5px;
+		text-indent:-99999px;
+		 margin:0px 0px 5px 5px;
+		&.logo{
+			width:400px;
+			height:60px;
+			background:url("/images/logo_sm.png") no-repeat;
+		}
 	}
 }
 
@@ -59,12 +67,14 @@ footer{
 
 
 #menu{
+	background:$accent_color_3;
 	border-top:1px solid $border_color;
 	border-bottom:1px solid $border_color;
 	text-transform:uppercase;
 	font-family: $title_font;
 	font-size:20px;
 	list-style:none;
+	padding-left:5px;
 	li{
 		float:left;
 		margin:0px 5px 0px 0px;
@@ -101,6 +111,14 @@ footer{
 section.content{
 	padding-top:10px;
 	margin-bottom:15px;
+	&.sidebar{
+		margin-bottom:10px;
+		& > section{
+			background:$pale_gray;
+			padding:5px 10px;
+			margin-bottom:10px;
+		}
+	}
 }
 
 article{
@@ -127,10 +145,16 @@ article{
 }
 
 section#masthead{
+	background:$accent_color_1;
+	color:$accent_color_3;
 	position:relative;
 	height:30px;
 	line-height:30px;
 	border-bottom:1px solid $border_color;
+	padding-left:10px;
+	a{
+		color:$white;
+	}
 }
 
 #sign_in_toggle, #logged_in_status{

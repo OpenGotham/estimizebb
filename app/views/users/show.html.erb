@@ -1,5 +1,6 @@
 <h2><%= @user.first_name %>'s Predictions</h2>
 
+<h4>Predictions on upcoming games</h4>
 <table class="data" width="100%">
 	<thead>
 		<tr>
@@ -12,8 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-
-	<% @user.player_game_stat_estimates.upcoming.each do |estimate| %>
+	<% @upcoming_estimates.each do |estimate| %>
 	<tr>
 		<td><%= estimate.game.to_s %></td>
 		<td><%= estimate.player.name %></td>
@@ -25,3 +25,33 @@
 	<% end %>
 </tbody>
 </table>
+<%= will_paginate @upcoming_estimates %>
+
+<br/>
+
+<h4>Predictions on past games</h4>
+<table class="data" width="100%">
+	<thead>
+		<tr>
+			<th>Game</th>
+			<th>Player</th>
+			<th>Avg</th>
+			<th>HR</th>
+			<th>RBI</th>
+			<th>ERA</th>
+		</tr>
+	</thead>
+	<tbody>
+	<% @past_estimates.each do |estimate| %>
+	<tr>
+		<td><%= estimate.game.to_s %></td>
+		<td><%= estimate.player.name %></td>
+		<td><%= estimate.avg %></td>
+		<td><%= estimate.hr %></td>
+		<td><%= estimate.rbi %></td>
+		<td><%= estimate.era %></td>
+	</tr>
+	<% end %>
+</tbody>
+</table>
+<%= will_paginate @past_estimates %>
