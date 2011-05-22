@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Player:</b>
+  <%= @player_game_stat_estimate.player_id %>
+</p>
+
+<p>
+  <b>Game:</b>
+  <%= @player_game_stat_estimate.game_id %>
+</p>
+
+<p>
+  <b>Team:</b>
+  <%= @player_game_stat_estimate.team_id %>
+</p>
+
+<p>
+  <b>Avg:</b>
+  <%= @player_game_stat_estimate.avg %>
+</p>
+
+<p>
+  <b>Hr:</b>
+  <%= @player_game_stat_estimate.hr %>
+</p>
+
+<p>
+  <b>Rbi:</b>
+  <%= @player_game_stat_estimate.rbi %>
+</p>
+
+<p>
+  <b>Era:</b>
+  <%= @player_game_stat_estimate.era %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @player_game_stat_estimate.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_player_game_stat_estimate_path(@player_game_stat_estimate) %> |
+<%= link_to 'Back', player_game_stat_estimates_path %>

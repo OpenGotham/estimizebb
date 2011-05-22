@@ -1,0 +1,37 @@
+<h1>Listing player_game_stat_estimates</h1>
+
+<table>
+  <tr>
+    <th>Player</th>
+    <th>Game</th>
+    <th>Team</th>
+    <th>Avg</th>
+    <th>Hr</th>
+    <th>Rbi</th>
+    <th>Era</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @player_game_stat_estimates.each do |player_game_stat_estimate| %>
+  <tr>
+    <td><%= player_game_stat_estimate.player_id %></td>
+    <td><%= player_game_stat_estimate.game_id %></td>
+    <td><%= player_game_stat_estimate.team_id %></td>
+    <td><%= player_game_stat_estimate.avg %></td>
+    <td><%= player_game_stat_estimate.hr %></td>
+    <td><%= player_game_stat_estimate.rbi %></td>
+    <td><%= player_game_stat_estimate.era %></td>
+    <td><%= player_game_stat_estimate.user_id %></td>
+    <td><%= link_to 'Show', player_game_stat_estimate %></td>
+    <td><%= link_to 'Edit', edit_player_game_stat_estimate_path(player_game_stat_estimate) %></td>
+    <td><%= link_to 'Destroy', player_game_stat_estimate, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Player game stat estimate', new_player_game_stat_estimate_path %>
