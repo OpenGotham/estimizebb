@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20110522050451) do
     t.datetime "updated_at"
   end
 
+  add_index "players", ["mlb_id"], :name => "index_players_on_mlb_id"
+
   create_table "team_player_stats", :force => true do |t|
     t.integer  "player_id"
     t.integer  "game_id"
@@ -68,6 +70,8 @@ ActiveRecord::Schema.define(:version => 20110522050451) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "teams", ["mlb_id"], :name => "index_teams_on_mlb_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

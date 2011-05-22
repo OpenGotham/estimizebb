@@ -25,8 +25,13 @@ mo.css('a').each do |day|
            away_team.update_attributes(:name => gamedoc.xpath('//game/team[attribute::type = "away"]').first['name'])
            home_team = Team.find_or_create_by_mlb_id(:mlb_id => gamedoc.xpath('//game/team[attribute::type = "home"]').first['id'])
            home_team.update_attributes(:name => gamedoc.xpath('//game/team[attribute::type = "home"]').first['name'])
-           game.update_attributes(:home_team => home_team,:away_team => away_team, :mlb_gameid => link.text.strip.gsub('/',''))
-
+           
+           # game.home_team = home_team
+           #            game.away_team = away_team
+           #            game.mlb_gameid = link.text.strip.gsub('/','')
+           #            game.save
+           
+           game.update_attributes("home_team_id" => home_team.id,"away_team_id" => away_team.id, "mlb_gameid" => link.text.strip.gsub('/',''))
            
            gamedoc.xpath('//game/team[attribute::type = "away"]/player').each do|playr|
               player = Player.find_or_create_by_mlb_id(playr.attribute('id').value.to_i)
