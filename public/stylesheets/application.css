@@ -663,7 +663,7 @@ svg {
 /* `Basic HTML
 ----------------------------------------------------------------------------------------------------*/
 body {
-  font: 13.5px/1.4 Georgia, serif, Times; }
+  font: 13.5px/1.4 verdana, helvetica, sans-serif; }
 
 hr {
   border: 0 #ccc solid;
@@ -1354,7 +1354,7 @@ header {
   padding-top: 5px; }
   header h1 {
     text-indent: -99999px;
-    margin: 0px 0px 5px 5px; }
+    margin: 3px 0px 8px 5px; }
     header h1.logo {
       width: 400px;
       height: 60px;
@@ -1452,6 +1452,7 @@ section#masthead {
     font-size: 11px; }
 
 #inline_login_container {
+  background: #fff;
   display: none;
   position: absolute;
   right: 0px;

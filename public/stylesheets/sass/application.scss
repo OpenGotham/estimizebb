@@ -52,7 +52,7 @@ header{
 	padding-top:5px;
 	h1{
 		text-indent:-99999px;
-		 margin:0px 0px 5px 5px;
+		 margin:3px 0px 8px 5px;
 		&.logo{
 			width:400px;
 			height:60px;
@@ -173,6 +173,7 @@ section#masthead{
 }
 
 #inline_login_container{
+	background:#fff;
 	display:none;
 	position:absolute;
 	right:0px;

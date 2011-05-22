@@ -1,11 +1,11 @@
 <% @player_team = @player.team_player_stats.first.team %>
 
 <div style="width:620px;height:300px;position:relative;background:#000 url(http://mlb.com/images/players/525x330/<%= @player.mlb_id %>.jpg);background-size: 620px 380px;">
-	<div style="color:white;background:rgba(255,255,255,0.3);padding:12px 10px 1px;">
+	<div style="color:white;background:rgba(255,255,255,0.3);padding:12px 10px 1px;text-shadow: 2px 2px 5px #000;">
 	<h2><%= @player.name %> (<%= @player.number %>) <%= "- #{@player.position}" if @player.position %></h2>
 	</div>
 	
-	<div style="color:white;width:620px;background:rgba(255,255,255,0.3);padding:8px 10px 0px;vertical-align:botom;position:absolute;bottom:0px">
+	<div style="color:white;text-shadow: 2px 2px 5px #000;width:620px;background:rgba(255,255,255,0.3);padding:8px 10px 0px;vertical-align:botom;position:absolute;bottom:0px">
 	<h3><%= @player_team.name %></h3>
 	</div>
 </div>

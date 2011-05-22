@@ -1,55 +1,35 @@
-<p id="notice"><%= notice %></p>
+<%
+@team_player_stats = @team.players.map{|p| p.team_player_stats.last}.compact
+%>
 
-<p>
-  <b>Name:</b>
-  <%= @team.name %>
-</p>
+<h1><%= @team.name %></h1>
 
-<p>
-  <b>League:</b>
-  <%= @team.league %>
-</p>
+<table class="data" width="100%">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Number</th>
+			<th>Position</th>
+			<th>RL</th>
+			<th>AVG</th>
+			<th>HR</th>
+			<th>RBI</th>
+			<th>ERA</th>
+		</tr>
+	</thead>
+	<tbody>
 
-<p>
-  <b>Division:</b>
-  <%= @team.division %>
-</p>
-
-<p>
-  <b>Manager:</b>
-  <%= @team.manager %>
-</p>
-
-<p>
-  <b>Wins:</b>
-  <%= @team.wins %>
-</p>
-
-<p>
-  <b>Losses:</b>
-  <%= @team.losses %>
-</p>
-
-<p>
-  <b>Founded:</b>
-  <%= @team.founded %>
-</p>
-
-<p>
-  <b>Mascot:</b>
-  <%= @team.mascot %>
-</p>
-
-<p>
-  <b>Ballpark:</b>
-  <%= @team.ballpark %>
-</p>
-
-<p>
-  <b>Logo url:</b>
-  <%= @team.logo_url %>
-</p>
-
-
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+		<% @team_player_stats.each do |player_stats| %>
+		<tr>
+			<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
+			<td><%= player_stats.player.number %></td>
+			<td><%= player_stats.position %></td>
+			<td><%= player_stats.rl %></td>
+			<td class="right"><%= player_stats.avg %></td>
+			<td class="right"><%= player_stats.hr %></td>
+			<td class="right"><%= player_stats.rbi %></td>
+			<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
