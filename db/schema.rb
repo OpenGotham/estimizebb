@@ -10,16 +10,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110522034239) do
+ActiveRecord::Schema.define(:version => 20110522050451) do
 
   create_table "games", :force => true do |t|
     t.datetime "starts_at"
     t.integer  "home_team_id"
     t.integer  "away_team_id"
-    t.integer  "venue_id"
+    t.string   "venue"
     t.string   "mlb_gameid"
     t.integer  "inning_state"
     t.string   "league"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "in_progress"
+  end
+
+  create_table "players", :force => true do |t|
+    t.string   "first"
+    t.string   "last"
+    t.integer  "number"
+    t.string   "position"
+    t.integer  "mlb_id"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "players", ["mlb_id"], :name => "index_players_on_mlb_id"
+
+  create_table "team_player_stats", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "game_id"
+    t.integer  "team_id"
+    t.string   "position"
+    t.string   "rl"
+    t.string   "status"
+    t.float    "avg"
+    t.integer  "hr"
+    t.integer  "rbi"
+    t.integer  "wins"
+    t.integer  "losses"
+    t.float    "era"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,9 +66,12 @@ ActiveRecord::Schema.define(:version => 20110522034239) do
     t.string   "mascot"
     t.string   "ballpark"
     t.string   "logo_url"
+    t.string   "mlb_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "teams", ["mlb_id"], :name => "index_teams_on_mlb_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
