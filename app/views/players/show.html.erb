@@ -1,3 +1,74 @@
+<style>
+/* root element for tabs  */
+.tabs { 
+	list-style:none; 
+	margin:0 !important; 
+	padding:0;
+	height:30px;
+	border-bottom:1px solid #ccc;	
+}
+
+/* single tab */
+.tabs li { 
+	float:left;	 
+	text-indent:0;
+	padding:0;
+	margin:0 !important;
+	list-style-image:none !important; 
+}
+
+/* link inside the tab. uses a background image */
+.tabs a { 
+	background: #eee;
+	font-size:11px;
+	display:block;
+	height: 30px;  
+	line-height:30px;
+	width: 111px;
+	text-align:center;	
+	text-decoration:none;
+	color:#000;
+	padding:0px;
+	margin:0px 5px 0px 0px;	
+	position:relative;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	top:0px;
+}
+
+.tabs a:active {
+	background: #fff;
+	outline:none;		
+}
+
+/* when mouse enters the tab move the background image */
+.tabs a:hover {
+	background-position: -652px -31px;	
+	color:#fff;	
+}
+
+/* active tab uses a class name "current". it's highlight is also done by moving the background image. */
+.tabs .current, .tabs .current:hover, .tabs li.current a {
+	background: #fff;		
+	cursor:default !important; 
+	color:#000 !important;
+	top:1px;
+}
+
+
+/* initially all panes are hidden */ 
+.panes{
+	border:1px solid #ccc;
+	border-top:none;
+	margin-bottom:10px;
+}
+.panes .pane {
+	display:none;		
+}
+
+</style>
+
 <p id="notice"><%= notice %></p>
 
 <% @player_team = @player.team_player_stats.first.team %>
@@ -13,8 +84,12 @@
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-function drawChart() {
+google.setOnLoadCallback(drawChartERA);
+google.setOnLoadCallback(drawChartAvg);
+google.setOnLoadCallback(drawChartHR);
+google.setOnLoadCallback(drawChartRBI);
+
+function drawChartAvg() {
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'Game');
 	data.addColumn('number', 'Avg');
@@ -24,12 +99,71 @@ function drawChart() {
 		data.setValue(<%= index %>,1,<%= player_stats.avg %>);
 	<% end %>
 
-	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	chart.draw(data, {width: 620, height: 150, title: 'Season Batting Average', fontSize: 10});
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div_avg'));
+	chart.draw(data, {width: 618, height: 150, title: 'Season Batting Average', fontSize: 9, legend: 'none', chartArea:{width: 560},titlePosition: 'none'});
 }
+
+function drawChartHR() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Game');
+	data.addColumn('number', 'HR');
+	data.addRows(<%= @player.team_player_stats.count %>);
+	<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		data.setValue(<%= index %>,0,'<%= player_stats.game.starts_at.to_s(:month_day_short).gsub("0","") %>');
+		data.setValue(<%= index %>,1,<%= player_stats.hr %>);
+	<% end %>
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div_hr'));
+	chart.draw(data, {width: 618, height: 150, title: 'Season Batting Average', fontSize: 9, legend: 'none', chartArea:{width: 560},titlePosition: 'none'});
+}
+
+function drawChartRBI() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Game');
+	data.addColumn('number', 'RBI');
+	data.addRows(<%= @player.team_player_stats.count %>);
+	<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		data.setValue(<%= index %>,0,'<%= player_stats.game.starts_at.to_s(:month_day_short).gsub("0","") %>');
+		data.setValue(<%= index %>,1,<%= player_stats.rbi %>);
+	<% end %>
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div_rbi'));
+	chart.draw(data, {width: 618, height: 150, title: 'Season Batting Average', fontSize: 9, legend: 'none', chartArea:{width: 560},titlePosition: 'none'});
+}
+
+function drawChartERA() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Game');
+	data.addColumn('number', 'ERA');
+	data.addRows(<%= @player.team_player_stats.count %>);
+	<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		data.setValue(<%= index %>,0,'<%= player_stats.game.starts_at.to_s(:month_day_short).gsub("0","") %>');
+		data.setValue(<%= index %>,1,<%= player_stats.era %>);
+	<% end %>
+
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div_era'));
+	chart.draw(data, {width: 618, height: 150, title: 'Season Batting Average', fontSize: 9, legend: 'none', chartArea:{width: 560},titlePosition: 'none'});
+}
+
 </script>
 
-<div id="chart_div"></div>
+<!-- the tabs -->
+<ul class="tabs">
+	<li><a href="#">Avg</a></li>
+	<li><a href="#">HR</a></li>
+	<li><a href="#">RBI</a></li>
+	<li><a href="#">ERA</a></li>
+</ul>
+
+<!-- tab "panes" -->
+<div class="panes clearfix">
+	<div id="chart_div_avg"></div>
+	<div id="chart_div_hr"></div>
+	<div id="chart_div_rbi"></div>
+	<div id="chart_div_era"></div>
+</div>
+
+
 
 <%
 def change(val,last_val)
@@ -75,3 +209,10 @@ end
 		<% end %>
 	</tbody>
 	</table>
+	
+<script>
+$(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div");
+});
+</script>
