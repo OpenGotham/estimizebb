@@ -1,4 +1,6 @@
 Estimizebb::Application.routes.draw do
+  resources :players
+
   devise_for :users
 
   resources :teams

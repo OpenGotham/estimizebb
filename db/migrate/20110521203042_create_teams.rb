@@ -11,6 +11,7 @@ class CreateTeams < ActiveRecord::Migration
       t.string :mascot
       t.string :ballpark
       t.string :logo_url
+      t.string :mlb_id
 
       t.timestamps
     end

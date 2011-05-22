@@ -1,0 +1,15 @@
+<%= simple_form_for(@player) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :name %>
+    <%= f.input :number %>
+    <%= f.input :position %>
+    <%= f.input :nlb_id %>
+    <%= f.input :team_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
