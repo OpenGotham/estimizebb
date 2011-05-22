@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110522041817) do
+ActiveRecord::Schema.define(:version => 20110522050451) do
 
   create_table "games", :force => true do |t|
     t.datetime "starts_at"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20110522041817) do
     t.string   "league"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "in_progress"
   end
 
   create_table "players", :force => true do |t|
