@@ -66,7 +66,7 @@ end
 end
 
 
-["month_04/","month_05/","month_06/"].each do|mo|
+["month_04/","month_05/"].each do|mo|
   grabit(MLB_TOP+mo)
 end
 

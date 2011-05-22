@@ -14,6 +14,7 @@
 		<%= form.input :player_id, :as => "hidden" %>
 		<%= form.association :game, :collection => @player.team.upcoming_games, :prompt => "Choose a Game" %>
 		<%= form.input :team_id, :as => "hidden" %>
+		<%= form.input :user_id, :as => "hidden" %>
 		<%= form.input :avg, :input_html => {:size => 5} %>
 		<%= form.input :hr, :input_html => {:size => 5} %>
 		<%= form.input :rbi, :input_html => {:size => 5} %>

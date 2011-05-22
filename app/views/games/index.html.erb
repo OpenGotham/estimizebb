@@ -6,10 +6,8 @@
     <th>Starts at</th>
     <th>Home team</th>
     <th>Away team</th>
-    <th>Venue</th>>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Venue</th>
+	<th></th>
   </tr>
 </thead>
 <tbody>
@@ -20,14 +18,8 @@
     <td><%= game.home_team.name %></td>
     <td><%= game.away_team.name %></td>
     <td><%= game.venue %></td>
-    <td><%= link_to 'Show', game %></td>
-    <td><%= link_to 'Edit', edit_game_path(game) %></td>
-    <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'View', game %></td>
   </tr>
 <% end %>
 </tbody>
 </table>
-
-<br />
-
-<%= link_to 'New Game', new_game_path %>

@@ -9,7 +9,8 @@
 @import "flash";
 @import "tables";
 @import "buttons";
-@import "dev";
+@import "tabs";
+/*@import "dev";*/
 
 $accent_color_1:		#ff0033;
 $accent_color_1_hover:	#981a37;
@@ -191,3 +192,4 @@ form#new_player_game_stat_estimate{
 		width:75px;
 	}
 }
+

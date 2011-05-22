@@ -17,11 +17,11 @@ class Game < ActiveRecord::Base
   end
   
   def home_team_player_stats
-    TeamPlayerStats.where("team_id = ? AND game_id = ?",home_team.id, self.id)
+    TeamPlayerStat.where("team_id = ? AND game_id = ?",home_team.id, self.id)
   end
   
   def away_team_player_stats
-    TeamPlayerStats.where("team_id = ? AND game_id = ?",away_team.id, self.id)
+    TeamPlayerStat.where("team_id = ? AND game_id = ?",away_team.id, self.id)
   end
   
 end

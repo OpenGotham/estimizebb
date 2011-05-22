@@ -1,73 +1,100 @@
-<p id="notice"><%= notice %></p>
-
 <h2>
-  <%= @game.home_team.name %> Hosting the <%= @game.away_team.name %> at <%= @game.venue %>
+  <%= @game.home_team.name %> Host the <%= @game.away_team.name %> at <%= @game.venue %>
 </h2>
 
 <h3>
   <%= @game.starts_at.to_s(:short_time) %>
 </h3>
 
+<%
+@home_player_stats = @game.home_team_player_stats
+if @home_player_stats.blank?
+	@home_player_stats = @game.home_team.players.map{|p| p.team_player_stats.last}.compact
+end
 
-<h4>Home Team Players (<%= @game.home_team.name %>)</h4>
-<table class="data" width="100%">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Number</th>
-			<th>Position</th>
-			<th>RL</th>
-			<th>AVG</th>
-			<th>HR</th>
-			<th>RBI</th>
-			<th>ERA</th>
-		</tr>
-	</thead>
-	<tbody>
-
-	<% @game.home_team_player_stats.each do |player_stats| %>
-	<tr>
-		<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
-		<td><%= player_stats.player.number %></td>
-		<td><%= player_stats.position %></td>
-		<td><%= player_stats.rl %></td>
-		<td class="right"><%= player_stats.avg %></td>
-		<td class="right"><%= player_stats.hr %></td>
-		<td class="right"><%= player_stats.rbi %></td>
-		<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
-	</tr>
-	<% end %>
-</tbody>
-</table>
+@away_player_stats = @game.away_team_player_stats
+if @away_player_stats.blank?
+	@away_player_stats = @game.away_team.players.map{|p| p.team_player_stats.last}.compact
+end
+	 
+%>
 
 
-<h4>Away Team Players (<%= @game.away_team.name %>)</h4>
-<table class="data" width="100%">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Number</th>
-			<th>Position</th>
-			<th>RL</th>
-			<th>AVG</th>
-			<th>HR</th>
-			<th>RBI</th>
-			<th>ERA</th>
-		</tr>
-	</thead>
-	<tbody>
+<!-- the tabs -->
+<ul class="tabs">
+	<li><a href="#">Home Team Players (<%= @game.home_team.name %>)</a></li>
+	<li><a href="#">Away Team Players (<%= @game.away_team.name %>)</a></li>
+</ul>
 
-	<% @game.away_team_player_stats.each do |player_stats| %>
-	<tr>
-		<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
-		<td><%= player_stats.player.number %></td>
-		<td><%= player_stats.position %></td>
-		<td><%= player_stats.rl %></td>
-		<td class="right"><%= player_stats.avg %></td>
-		<td class="right"><%= player_stats.hr %></td>
-		<td class="right"><%= player_stats.rbi %></td>
-		<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
-	</tr>
-	<% end %>
-</tbody>
-</table>
+<!-- tab "panes" -->
+<div class="panes stats clearfix">
+	<div>
+		<table class="data" width="100%">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Number</th>
+					<th>Position</th>
+					<th>RL</th>
+					<th>AVG</th>
+					<th>HR</th>
+					<th>RBI</th>
+					<th>ERA</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<% @home_player_stats.each do |player_stats| %>
+				<tr>
+					<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
+					<td><%= player_stats.player.number %></td>
+					<td><%= player_stats.position %></td>
+					<td><%= player_stats.rl %></td>
+					<td class="right"><%= player_stats.avg %></td>
+					<td class="right"><%= player_stats.hr %></td>
+					<td class="right"><%= player_stats.rbi %></td>
+					<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<table class="data" width="100%">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Number</th>
+					<th>Position</th>
+					<th>RL</th>
+					<th>AVG</th>
+					<th>HR</th>
+					<th>RBI</th>
+					<th>ERA</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<% @away_player_stats.each do |player_stats| %>
+				<tr>
+					<td><%= link_to(player_stats.player.name, player_stats.player) %></td>
+					<td><%= player_stats.player.number %></td>
+					<td><%= player_stats.position %></td>
+					<td><%= player_stats.rl %></td>
+					<td class="right"><%= player_stats.avg %></td>
+					<td class="right"><%= player_stats.hr %></td>
+					<td class="right"><%= player_stats.rbi %></td>
+					<td class="right"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+$(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div");
+});
+</script>

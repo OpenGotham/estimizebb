@@ -3,7 +3,8 @@
 	<% leaders.each do |user| %>
 		<article id="leaderboard_user_<%= user.id %>" class="leaderboard_user">
 			<%= image_tag(user.avatar_url(:tiny)) %>
-			<%= user.name %>
+			<%= link_to(user.name,user) %>
+			(<%= user.player_game_stat_estimates.count %>)
 		</article>
 	<% end %>
 </section>
