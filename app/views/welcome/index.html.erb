@@ -1,3 +1,29 @@
+<h1>Recent Games</h1>
+<table class="data" width="100%">
+	<thead>
+  <tr>
+    <th>Starts at</th>
+    <th>Home team</th>
+    <th>Away team</th>
+    <th>Venue</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<% @recent_games.each do |game| %>
+  <tr>
+    <td><%= game.starts_at.to_s(:short_time) %></td>
+    <td><%= game.home_team.name.gsub(game.home_team.name.split(" ").last,"").strip %></td>
+    <td><%= game.away_team.name.gsub(game.away_team.name.split(" ").last,"").strip %></td>
+    <td><%= game.venue %></td>
+    <td><%= link_to 'Show', game %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br/>
+
 <h1>Upcoming Games</h1>
 <table class="data" width="100%">
 	<thead>
@@ -10,11 +36,11 @@
   </tr>
 </thead>
 <tbody>
-<% @games.each do |game| %>
+<% @upcoming_games.each do |game| %>
   <tr>
     <td><%= game.starts_at.to_s(:short_time) %></td>
-    <td><%= game.home_team.name.split(" ").first %></td>
-    <td><%= game.away_team.name.split(" ").first %></td>
+    <td><%= game.home_team.name.gsub(game.home_team.name.split(" ").last,"").strip %></td>
+    <td><%= game.away_team.name.gsub(game.away_team.name.split(" ").last,"").strip %></td>
     <td><%= game.venue %></td>
     <td><%= link_to 'Show', game %></td>
   </tr>
