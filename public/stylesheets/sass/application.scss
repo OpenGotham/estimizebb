@@ -177,3 +177,17 @@ form#inline_login{
 		text-align:center;
 	}
 }
+
+form#new_player_game_stat_estimate{
+	margin-bottom:15px;
+	div.input{
+		margin-bottom:3px;
+	}
+	input.button{
+		margin:5px 0px 0px 75px;
+	}
+	label{
+		display:inline-block;
+		width:75px;
+	}
+}

@@ -1,0 +1,28 @@
+<%= simple_form_for estimate do |form| %>
+	<% if estimate.errors.any? %>
+	   <div id="error_explanation">
+	     <h2><%= pluralize(estimate.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+	     <ul>
+	     <% estimate.errors.full_messages.each do |msg| %>
+	       <li><%= msg %></li>
+	     <% end %>
+	     </ul>
+	   </div>
+	 <% end %>
+	<%#= form.inputs do %>
+		<%= form.input :player_id, :as => "hidden" %>
+		<%= form.association :game, :collection => @player.team.upcoming_games, :prompt => "Choose a Game" %>
+		<%= form.input :team_id, :as => "hidden" %>
+		<%= form.input :avg, :input_html => {:size => 5} %>
+		<%= form.input :hr, :input_html => {:size => 5} %>
+		<%= form.input :rbi, :input_html => {:size => 5} %>
+		<%= form.input :era, :input_html => {:size => 5} %>
+	<%# end %>
+	
+	<%#= form.buttons do %>
+	
+		<%= form.submit "Submit Prediction", :class => "blue button" %>
+	<%# end %>
+	
+<% end %>

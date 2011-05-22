@@ -1,5 +1,8 @@
 <style>
 /* root element for tabs  */
+iframe{
+	display:block;
+}
 .tabs { 
 	list-style:none; 
 	margin:0 !important; 
@@ -59,6 +62,8 @@
 
 /* initially all panes are hidden */ 
 .panes{
+	height:150px;
+	background:#fff;
 	border:1px solid #ccc;
 	border-top:none;
 	margin-bottom:10px;
@@ -81,6 +86,87 @@
   <b>Name:</b>
   <%= @player.name %> (<%= @player.number %>) <%= "- #{@player.position}" if @player.position %>
 </p>
+
+<!-- the tabs -->
+<ul class="tabs">
+	<li><a href="#">Avg</a></li>
+	<li><a href="#">HR</a></li>
+	<li><a href="#">RBI</a></li>
+	<li><a href="#">ERA</a></li>
+</ul>
+
+<!-- tab "panes" -->
+<div class="panes clearfix">
+	<div id="chart_div_avg"></div>
+	<div id="chart_div_hr"></div>
+	<div id="chart_div_rbi"></div>
+	<div id="chart_div_era"></div>
+</div>
+
+
+
+<%
+def change(val,last_val)
+	if val && last_val
+		delta = (val - last_val).round(2)
+		if delta > 0
+			delta_string =  "<span class='positive'>+#{delta}</span>"
+		elsif delta < 0
+			delta_string =  "<span class='negative'>#{delta}</span>"
+		end
+		return delta_string.html_safe if delta_string
+	end
+end
+%>
+
+	
+	<table class="data" width="100%">
+		<thead>
+			<tr>
+				<th>Game Date</th>
+				<th>Against</th>
+				<!-- <th class="center">Position</th> -->
+				<th class="center" colspan="2">AVG</th>
+				<th class="center" colspan="2">HR</th>
+				<th class="center" colspan="2">RBI</th>
+				<th class="center" colspan="2">ERA</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		<% opposing_team = (player_stats.game.home_team == @player_team ? player_stats.game.away_team : player_stats.game.home_team)%>
+		<tr>
+			<td><%= link_to(player_stats.game.starts_at, player_stats.game) %></td>
+			<td><%= link_to(opposing_team.name, opposing_team) %></td>
+			<!-- <td><%#= player_stats.position %></td> -->
+			<td class="right" style="width:30px"><%= player_stats.avg %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.avg,@player.team_player_stats[index - 1].avg) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.hr %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.hr,@player.team_player_stats[index - 1].hr) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.rbi %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.rbi,@player.team_player_stats[index - 1].rbi) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.era, @player.team_player_stats[index - 1].era) unless index < 1 %></td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
+	
+	
+<script>
+$(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div");
+});
+</script>
+
+<%= content_for :right_content do %>
+	
+	<%= render :partial => "/shared/estimate_form", :locals => {:estimate => @player.estimates.new({:avg => @player.team_player_stats.last.avg.to_f,:hr => @player.team_player_stats.last.hr.to_f,:rbi => @player.team_player_stats.last.rbi.to_f,:era => @player.team_player_stats.last.era.to_f})}%>
+	
+<% end %>
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 google.load("visualization", "1", {packages:["corechart"]});
@@ -138,7 +224,7 @@ function drawChartERA() {
 	data.addRows(<%= @player.team_player_stats.count %>);
 	<% @player.team_player_stats.each_with_index do |player_stats, index| %>
 		data.setValue(<%= index %>,0,'<%= player_stats.game.starts_at.to_s(:month_day_short).gsub("0","") %>');
-		data.setValue(<%= index %>,1,<%= player_stats.era %>);
+		data.setValue(<%= index %>,1,<%= player_stats.era || 0 %>);
 	<% end %>
 
 	var chart = new google.visualization.LineChart(document.getElementById('chart_div_era'));
@@ -147,72 +233,3 @@ function drawChartERA() {
 
 </script>
 
-<!-- the tabs -->
-<ul class="tabs">
-	<li><a href="#">Avg</a></li>
-	<li><a href="#">HR</a></li>
-	<li><a href="#">RBI</a></li>
-	<li><a href="#">ERA</a></li>
-</ul>
-
-<!-- tab "panes" -->
-<div class="panes clearfix">
-	<div id="chart_div_avg"></div>
-	<div id="chart_div_hr"></div>
-	<div id="chart_div_rbi"></div>
-	<div id="chart_div_era"></div>
-</div>
-
-
-
-<%
-def change(val,last_val)
-	delta = (val - last_val).round(2)
-	if delta > 0
-		delta_string =  "<span class='positive'>+#{delta}</span>"
-	elsif delta < 0
-		delta_string =  "<span class='negative'>#{delta}</span>"
-	end
-	return delta_string.html_safe if delta_string
-end
-%>
-	
-	<table class="data" width="100%">
-		<thead>
-			<tr>
-				<th>Game Date</th>
-				<th>Against</th>
-				<th class="center">Position</th>
-				<th class="center" colspan="2">AVG</th>
-				<th class="center" colspan="2">HR</th>
-				<th class="center" colspan="2">RBI</th>
-				<th class="center" colspan="2">ERA</th>
-			</tr>
-		</thead>
-		<tbody>
-
-		<% @player.team_player_stats.each_with_index do |player_stats, index| %>
-		<% opposing_team = (player_stats.game.home_team == @player_team ? player_stats.game.away_team : player_stats.game.home_team)%>
-		<tr>
-			<td><%= link_to(player_stats.game.starts_at, player_stats.game) %></td>
-			<td><%= link_to(opposing_team.name, opposing_team) %></td>
-			<td><%= player_stats.position %></td>
-			<td class="right" style="width:30px"><%= player_stats.avg %></td>
-			<td class="right" style="width:30px"><%= change(player_stats.avg,@player.team_player_stats[index - 1].avg) unless index < 1 %></td>
-			<td class="right" style="width:30px"><%= player_stats.hr %></td>
-			<td class="right" style="width:30px"><%= change(player_stats.hr,@player.team_player_stats[index - 1].hr) unless index < 1 %></td>
-			<td class="right" style="width:30px"><%= player_stats.rbi %></td>
-			<td class="right" style="width:30px"><%= change(player_stats.rbi,@player.team_player_stats[index - 1].rbi) unless index < 1 %></td>
-			<td class="right" style="width:30px"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
-			<td class="right" style="width:30px"><%= change(player_stats.era, @player.team_player_stats[index - 1].era) unless index < 1 %></td>
-		</tr>
-		<% end %>
-	</tbody>
-	</table>
-	
-<script>
-$(function() {
-	// setup ul.tabs to work as tabs for each div directly under div.panes
-	$("ul.tabs").tabs("div.panes > div");
-});
-</script>
