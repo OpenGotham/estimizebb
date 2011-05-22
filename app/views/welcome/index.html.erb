@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th>Starts at</th>
+    <th>Home team</th>
+    <th>Away team</th>
+    <th>Venue</th>
+    <th></th>
+  </tr>
+
+<% @games.each do |game| %>
+  <tr>
+    <td><%= game.starts_at %></td>
+    <td><%= game.home_team_id %></td>
+    <td><%= game.away_team_id %></td>
+    <td><%= game.venue_id %></td>
+    <td><%= link_to 'Show', game %></td>
+  </tr>
+<% end %>
+</table>
+
+
