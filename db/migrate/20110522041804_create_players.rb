@@ -5,7 +5,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.string :last
       t.integer :number
       t.string :position
-      t.integer :nlb_id
+      t.integer :mlb_id
       t.integer :team_id
 
       t.timestamps
