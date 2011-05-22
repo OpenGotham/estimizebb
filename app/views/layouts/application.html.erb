@@ -14,7 +14,8 @@
 	<div id="page_container" class="container_12 clearfix">
 		<section id="masthead" class="grid_12">
 			<% if user_signed_in? %> 
-				<%= link_to("My Account", edit_user_registration_url)%>
+				<%= link_to("My Account", edit_user_registration_url)%> | 
+				<%= link_to("My Profile", user_url(current_user))%>
 			<% end %>
 			<%= render :partial => "/shared/login_widget" %>
 		</section>
