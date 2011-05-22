@@ -1,33 +1,31 @@
 <h1>Listing games</h1>
 
-<table>
+<table class="data" width="100%">
+	<thead>
   <tr>
     <th>Starts at</th>
     <th>Home team</th>
     <th>Away team</th>
-    <th>Venue</th>
-    <th>Mlb gameid</th>
-    <th>Inning state</th>
-    <th>League</th>
+    <th>Venue</th>>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+</thead>
+<tbody>
 
 <% @games.each do |game| %>
   <tr>
-    <td><%= game.starts_at %></td>
-    <td><%= game.home_team_id %></td>
-    <td><%= game.away_team_id %></td>
+    <td><%= game.starts_at.to_s(:short_time) %></td>
+    <td><%= game.home_team.name %></td>
+    <td><%= game.away_team.name %></td>
     <td><%= game.venue %></td>
-    <td><%= game.mlb_gameid %></td>
-    <td><%= game.inning_state %></td>
-    <td><%= game.league %></td>
     <td><%= link_to 'Show', game %></td>
     <td><%= link_to 'Edit', edit_game_path(game) %></td>
     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
 
 <br />

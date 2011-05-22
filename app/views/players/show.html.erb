@@ -1,30 +1,77 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @player.name %>
-</p>
-
-<p>
-  <b>Number:</b>
-  <%= @player.number %>
-</p>
-
-<p>
-  <b>Position:</b>
-  <%= @player.position %>
-</p>
-
-<p>
-  <b>Nlb:</b>
-  <%= @player.nlb_id %>
-</p>
-
+<% @player_team = @player.team_player_stats.first.team %>
 <p>
   <b>Team:</b>
-  <%= @player.team_id %>
+  <%= @player_team.name %>
 </p>
 
+<p>
+  <b>Name:</b>
+  <%= @player.name %> (<%= @player.number %>) <%= "- #{@player.position}" if @player.position %>
+</p>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+function drawChart() {
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Game');
+	data.addColumn('number', 'Avg');
+	data.addRows(<%= @player.team_player_stats.count %>);
+	<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		data.setValue(<%= index %>,0,'<%= player_stats.game.starts_at.to_s(:month_day_short).gsub("0","") %>');
+		data.setValue(<%= index %>,1,<%= player_stats.avg %>);
+	<% end %>
 
-<%= link_to 'Edit', edit_player_path(@player) %> |
-<%= link_to 'Back', players_path %>
+	var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	chart.draw(data, {width: 620, height: 150, title: 'Season Batting Average', fontSize: 10});
+}
+</script>
+
+<div id="chart_div"></div>
+
+<%
+def change(val,last_val)
+	delta = (val - last_val).round(2)
+	if delta > 0
+		delta_string =  "<span class='positive'>+#{delta}</span>"
+	elsif delta < 0
+		delta_string =  "<span class='negative'>#{delta}</span>"
+	end
+	return delta_string.html_safe if delta_string
+end
+%>
+	
+	<table class="data" width="100%">
+		<thead>
+			<tr>
+				<th>Game Date</th>
+				<th>Against</th>
+				<th class="center">Position</th>
+				<th class="center" colspan="2">AVG</th>
+				<th class="center" colspan="2">HR</th>
+				<th class="center" colspan="2">RBI</th>
+				<th class="center" colspan="2">ERA</th>
+			</tr>
+		</thead>
+		<tbody>
+
+		<% @player.team_player_stats.each_with_index do |player_stats, index| %>
+		<% opposing_team = (player_stats.game.home_team == @player_team ? player_stats.game.away_team : player_stats.game.home_team)%>
+		<tr>
+			<td><%= link_to(player_stats.game.starts_at, player_stats.game) %></td>
+			<td><%= link_to(opposing_team.name, opposing_team) %></td>
+			<td><%= player_stats.position %></td>
+			<td class="right" style="width:30px"><%= player_stats.avg %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.avg,@player.team_player_stats[index - 1].avg) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.hr %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.hr,@player.team_player_stats[index - 1].hr) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.rbi %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.rbi,@player.team_player_stats[index - 1].rbi) unless index < 1 %></td>
+			<td class="right" style="width:30px"><%= player_stats.era.blank? ? "N/A" : player_stats.era %></td>
+			<td class="right" style="width:30px"><%= change(player_stats.era, @player.team_player_stats[index - 1].era) unless index < 1 %></td>
+		</tr>
+		<% end %>
+	</tbody>
+	</table>
