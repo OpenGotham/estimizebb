@@ -10,6 +10,8 @@ class CreatePlayers < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :players, :mlb_id
+
   end
 
   def self.down

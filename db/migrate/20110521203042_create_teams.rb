@@ -15,6 +15,7 @@ class CreateTeams < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :teams, :mlb_id
   end
 
   def self.down
