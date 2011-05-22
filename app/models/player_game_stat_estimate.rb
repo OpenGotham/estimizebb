@@ -11,5 +11,9 @@ class PlayerGameStatEstimate < ActiveRecord::Base
   
   scope :upcoming, joins(:game) & Game.upcoming 
   scope :past, joins(:game) & Game.past 
+  
+  def comparason_record
+    player.team_player_stats.where(:game_id => game.id)
+  end
 
 end

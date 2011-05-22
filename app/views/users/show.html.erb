@@ -29,16 +29,30 @@
 
 <br/>
 
+<%
+def change(val,last_val)
+	if val && last_val
+		delta = (val - last_val).round(2)
+		if delta > 0
+			delta_string =  "<span class='negative'>+#{delta}</span>"
+		elsif delta < 0
+			delta_string =  "<span class='negative'>#{delta}</span>"
+		end
+		return delta_string.html_safe if delta_string
+	end
+end
+%>
+
 <h4>Predictions on past games</h4>
 <table class="data" width="100%">
 	<thead>
 		<tr>
 			<th>Game</th>
 			<th>Player</th>
-			<th>Avg</th>
-			<th>HR</th>
-			<th>RBI</th>
-			<th>ERA</th>
+			<th colspan="2">Avg</th>
+			<th colspan="2">HR</th>
+			<th colspan="2">RBI</th>
+			<th colspan="2">ERA</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,10 +60,14 @@
 	<tr>
 		<td><%= estimate.game.to_s %></td>
 		<td><%= estimate.player.name %></td>
-		<td><%= estimate.avg %></td>
-		<td><%= estimate.hr %></td>
-		<td><%= estimate.rbi %></td>
-		<td><%= estimate.era %></td>
+		<td class="right" style="width:30px"><%= estimate.avg %></td>
+		<td class="right" style="width:30px"><%= change(estimate.avg,comparason_record.avg) unless index < 1 %></td>
+		<td class="right" style="width:30px"><%= estimate.hr %></td>
+		<td class="right" style="width:30px"><%= change(estimate.hr,estimate.comparason_record.hr) unless index < 1 %></td>
+		<td class="right" style="width:30px"><%= estimate.rbi %></td>
+		<td class="right" style="width:30px"><%= change(estimate.rbi,estimate.comparason_record.rbi) unless index < 1 %></td>
+		<td class="right" style="width:30px"><%= estimate.era.blank? ? "N/A" : estimate.era %></td>
+		<td class="right" style="width:30px"><%= change(estimate.era, estimate.comparason_record.era) unless index < 1 %></td>
 	</tr>
 	<% end %>
 </tbody>
