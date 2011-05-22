@@ -1,0 +1,9 @@
+<section id="leaderboard", class="module">
+	<h2>Leaderboard</h2>
+	<% leaders.each do |user| %>
+		<article id="leaderboard_user_<%= user.id %>" class="leaderboard_user">
+			<%= image_tag(user.avatar_url(:tiny)) %>
+			<%= user.name %>
+		</article>
+	<% end %>
+</section>

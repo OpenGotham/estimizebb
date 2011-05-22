@@ -1,0 +1,25 @@
+<% unless user_signed_in? %> 
+	<%= link_to("Sign up now!",new_user_registration_url)%>
+	<div id="sign_in_toggle"><span>Have an Account?</span>Sign In</div>
+	<div id="inline_login_container">
+		<%= form_for("user", :url => user_session_path, :html => {:id => "inline_login"}) do |f| %> 
+		<div class="field">
+			<%= f.label :email %>
+			<%= f.text_field :email , :size=>'15',:maxlength=>'32' %>
+		</div>
+		<div class="field">
+			<%= f.label :password %>
+			<%= f.password_field :password , :size=>'15', :maxlength=>'32' %>
+		</div>
+		<div class="field">
+			<label>&nbsp;</label>
+			<%= f.submit "Sign in", :class => "green button" %>
+		</div>
+		<div id="forgot_pass">
+			<%= link_to "Forgot your password?", new_password_path('user')  %> 
+		</div>
+		<% end %>
+	</div>
+<% else %>
+	<div id="logged_in_status">Welcome back, <%= current_user.first_name %> <%= link_to("Logout", destroy_user_session_url)%></div>
+<% end %>
