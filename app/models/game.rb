@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
   #scope :current_upcoming, where(:in_progress => true)
   #scope :pending, :conditions => ["starts_at >= ?", DateTime.now]
   #scope :upcoming, :conditions => ["starts_at <= ?", DateTime.now + 2.day]
-  
+  has_many :team_player_stats
   
   def home_team_player_stats
     TeamPlayerStats.where("team_id = ? AND game_id = ?",home_team.id, self.id)
