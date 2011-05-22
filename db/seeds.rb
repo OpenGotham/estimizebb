@@ -19,22 +19,13 @@ mo.css('a').each do |day|
     doc.css('a').each do |link|
        if link.text.match("gid_2011")
          begin 
-           linedoc = Nokogiri::HTML(open(mlbtop+day.text.strip+link.text.strip+"/linescore.xml"))
-           game = Game.find_or_create_by_mlb_gameid(:mlb_gameid => "gid_"+linedoc.xpath('//game').first['id'].gsub('/','_'))
-           game.update_attributes(:home_team =>  Team.find_or_create_by_mlb_id( linedoc.xpath('//game').first('home_name_abbrev')), :away_team =>  Team.find_or_create_by_mlb_id( linedoc.xpath('//game').first("away_name_abbrev")),:starts_at => DateTime.parse(linedoc.xpath('//game/game_media/media').first('start')), :venue => linedoc.xpath('//game').first('venue')  )
-          rescue Exception => e  
-            "error #{e.message}"
-         end
-          begin
            gamedoc = Nokogiri::HTML(open(mlbtop+day.text.strip+link.text.strip+"/players.xml"))
-           game = Game.find_or_create_by_mlb_gameid(:mlb_gameid => link.text.strip.gsub('/',''))
+           game ||= Game.find_or_create_by_mlb_gameid(:mlb_gameid => link.text.strip.gsub('/',''))
 
            away_team = Team.find_or_create_by_mlb_id(:mlb_id => gamedoc.xpath('//game/team[attribute::type = "away"]').first['id'])
            away_team.update_attributes(:name => gamedoc.xpath('//game/team[attribute::type = "away"]').first['name'])
            home_team = Team.find_or_create_by_mlb_id(:mlb_id => gamedoc.xpath('//game/team[attribute::type = "home"]').first['id'])
            home_team.update_attributes(:name => gamedoc.xpath('//game/team[attribute::type = "home"]').first['name'])
-           game.update_attributes("home_team_id" => home_team.id,"away_team_id" => away_team.id,:venue => gamedoc.xpath('//game').first['venue'])
-
            gamedoc.xpath('//game/team[attribute::type = "away"]/player').each do|playr|
               player = Player.find_or_create_by_mlb_id(playr.attribute('id').value.to_i)
               player.update_attributes(:first =>  playr.attribute('first').value, :last => playr.attribute('last').value,:number => playr.attribute('num').value.to_i )
@@ -45,10 +36,25 @@ mo.css('a').each do |day|
               player.update_attributes(:first =>  playr.attribute('first').value, :last => playr.attribute('last').value,:number => playr.attribute('num').value.to_i )
               TeamPlayerStats.create(:player => player, :game => game, :team => home_team, :rl => playr.attribute('rl').value, :status => playr.attribute('status').value, :avg => playr.attribute('avg').value.to_f, :hr => playr.attribute('hr').value.to_i, :rbi => playr.attribute('rbi').value.to_i, :wins => playr.attribute('wins') ? playr.attribute('wins').value.to_i : nil, :losses => playr.attribute('losses') ?  playr.attribute('losses').value.to_i : nil , :era => playr.attribute('era') ? playr.attribute('era').value.to_f : nil, :position =>  playr.attribute('game_possition') ? playr.attribute('game_position') : playr.attribute('position'))
            end
+            if game.starts_at.nil? 
+              game.update_attributes("home_team_id" => home_team.id,"away_team_id" => away_team.id,:venue => gamedoc.xpath('//game').first['venue'], :starts_at => DateTime.parse(gamedoc.xpath('//game').first['date']) )
+ 
+            else
+               game.update_attributes("home_team_id" => home_team.id,"away_team_id" => away_team.id,:venue => gamedoc.xpath('//game').first['venue'] )
+            end
          rescue Exception => e  
             "error #{e.message}"
          end
+         begin
+         linedoc = Nokogiri::HTML(open(mlbtop+day.text.strip+link.text.strip+"/linescore.xml"))
+           game = Game.find_or_create_by_mlb_gameid(:mlb_gameid => "gid_"+linedoc.xpath('//game').first['id'].gsub('/','_'))
+           game.update_attributes(:home_team =>  Team.find_or_create_by_mlb_id( linedoc.xpath('//game').first['home_name_abbrev']), :away_team =>  Team.find_or_create_by_mlb_id( linedoc.xpath('//game').first["away_name_abbrev"]),:starts_at => DateTime.parse(linedoc.xpath('//game/game_media/media').first['start']), :venue => linedoc.xpath('//game').first['venue']  )
+           rescue Exception => e  
+            "error #{e.message}"
+         end
 
+
+        
 
        end
     end
