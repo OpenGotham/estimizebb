@@ -35,7 +35,6 @@ mo.css('a').each do |day|
            home_team.update_attributes(:name => gamedoc.xpath('//game/team[attribute::type = "home"]').first['name'])
            game.update_attributes("home_team_id" => home_team.id,"away_team_id" => away_team.id,:venue => gamedoc.xpath('//game').first['venue'])
 
-           
            gamedoc.xpath('//game/team[attribute::type = "away"]/player').each do|playr|
               player = Player.find_or_create_by_mlb_id(playr.attribute('id').value.to_i)
               player.update_attributes(:first =>  playr.attribute('first').value, :last => playr.attribute('last').value,:number => playr.attribute('num').value.to_i )
